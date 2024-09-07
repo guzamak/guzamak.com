@@ -1,0 +1,7 @@
+export default function Filterbox() {
+  return (
+    <div  className="flex justify-center items-center py-3 px-6  border-[1px] backdrop-blur-sm  border-grey-12  rounded-2xl text-grey-40 ">
+      Website
+    </div>
+  )
+}
