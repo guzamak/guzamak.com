@@ -11,9 +11,9 @@ export default function Home() {
       <Hero />
       <Introduction />
        <ProjectList />
-      {/* <ActivityList /> */}
-      {/* <Banner />
-      <Skill /> */}
+      <ActivityList />
+      {/* <Banner /> */}
+      <Skill />
     </main>
   );
 }

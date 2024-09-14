@@ -11,6 +11,27 @@
     }
   }
   
+    @keyframes loop-rotate{
+      100% {
+        rotate: 1turn;
+      }
+  }
+  @keyframes hold-rotate{
+    100% {
+      rotate: -1turn;
+    }
+}
+
+  
   .animate-loop-scroll {
     animation: loop-scroll 50s linear infinite;
+  }
+
+  .animate-loop-rotate{
+    animation: loop-rotate 20s linear infinite;
+  }
+
+  
+  .animate-hold-rotate{
+    animation: hold-rotate 20s linear infinite;
   }

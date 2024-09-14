@@ -33,7 +33,7 @@ export default function Hero() {
   const [learningPos, setLearningPos] = useState<Position>({ x: 0, y: 0 });
   const [infoPos, setInfoPos] = useState<Position>({ x: 250, y: 100 });
   const [numsbox, setNumsBox] = useState<number>();
-  const boxWidth = useRef(50)
+  const boxWidth = useRef(50);
 
   useEffect(() => {
     const infoBox = personalInfoBoxRef.current?.getBoundingClientRect();
@@ -78,9 +78,7 @@ export default function Hero() {
     };
   };
 
-  useEffect(() => {
-
-  },[])
+  useEffect(() => {}, []);
   const dashline = () => {
     const containerWidth = (150 * window.innerWidth) / 100;
     const distance = 100;
@@ -90,41 +88,39 @@ export default function Hero() {
 
   useEffect(() => {
     dashline();
-  })
+  }, []);
 
   return (
     <div className="w-screen h-[60vh] relative overflow-hidden bg-black bg-opacity-25 ">
-<div
-  className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,#40404012_1px,transparent_1px),linear-gradient(to_bottom,#40404012_1px,transparent_1px)] bg-[size:24px_24px]">
-
-</div>
-
-    {[passionBoxCenterPos,learningBoxCenterPos,cretiveBoxCenterPos].map((pos,i)=>(
-            <div
+      <div className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,#40404012_1px,transparent_1px),linear-gradient(to_bottom,#40404012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      {[passionBoxCenterPos, learningBoxCenterPos, cretiveBoxCenterPos].map(
+        (pos, i) => (
+          <div
             key={i}
             className="absolute h-[0.4rem] overflow-hidden"
             style={createLineStyle(infoBoxCenterPos, pos)}
           >
-                  <div className="flex w-[150vw] h-full">
-          {[...Array(2)].map((_, j) => (
-            <div className="flex animate-loop-scroll " key={j}>
-              {[...Array(numsbox)].map((_, k) => (
-                <div
-                className="h-full border-grey-25 border-[1px] rounded opacity-50 "
-                style={{
-                  width: `${boxWidth.current}px`,
-                  marginRight: `${boxWidth.current}px`,
-                }}
-                  key={k}
-                ></div>
+            <div className="flex w-[150vw] h-full">
+              {[...Array(2)].map((_, j) => (
+                <div className="flex animate-loop-scroll " key={j}>
+                  {[...Array(numsbox)].map((_, k) => (
+                    <div
+                      className="h-full border-grey-25 border-[1px] rounded opacity-50 "
+                      style={{
+                        width: `${boxWidth.current}px`,
+                        marginRight: `${boxWidth.current}px`,
+                      }}
+                      key={k}
+                    ></div>
+                  ))}
+                </div>
               ))}
             </div>
-          ))}
           </div>
-      </div>
-    ))}
+        )
+      )}
       <div className="relative">
-        <Mainbox ref={personalInfoBoxRef} boxPos={infoPos}/>
+        <Mainbox ref={personalInfoBoxRef} boxPos={infoPos} />
         <DragableBox
           title="CRETIVE"
           setBoxPos={setCretivePos}
