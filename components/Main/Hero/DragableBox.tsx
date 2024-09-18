@@ -59,6 +59,7 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
 
     const onTouchMove = (e: TouchEvent) => {
       if (dragging) {
+        e.preventDefault();
         const touch = e.touches[0];
         const deltaX = touch.pageX - mousePos.x;
         const deltaY = touch.pageY - mousePos.y;
@@ -76,7 +77,7 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
       window.addEventListener("mousemove", onMouseMove);
       window.addEventListener("mouseup", onMouseUp);
       window.addEventListener("touchend", onMouseUp);
-      window.addEventListener("touchmove", onTouchMove);
+      window.addEventListener("touchmove", onTouchMove,{passive:false});
 
       return () => {
         window.removeEventListener("mousemove", onMouseMove);

@@ -1,19 +1,30 @@
-import Filterbox from "./Filterbox"
-import Project from "./Project"
+import { useState } from "react";
+import Filterbox from "./Filterbox";
+import Project from "./Project";
 export default function ProjectList() {
+  const [ProjectData, setProjectFData] = useState([
+    {imagePath: "", title: "", description:"",type: ["",""]},
+    {imagePath: "", title: "", description:"",type: ["",""]},
+    {imagePath: "", title: "", description:"",type: ["",""]},
+    {imagePath: "", title: "", description:"",type: ["",""]},
+    {imagePath: "", title: "", description:"",type: ["",""]},
+    {imagePath: "", title: "", description:"",type: ["",""]},
+  ])
   return (
-    <div className="flex flex-col items-center gap-y-12  mt-28 mx-56">
-        <h1 className="text-white text-4xl bg-gradient-to-br from-white to-grey-10 bg-clip-text">- Project -</h1>
-        <div className="flex  gap-4 w-full">
-          <Filterbox />
-          <Filterbox />
-          <Filterbox />
-        </div>
-        <div className="flex w-full justify-between px-20">
-          <Project />
-          <Project />
-          <Project />
-        </div>
+    <div className="container max-w-screen-2xl mx-auto px-4 flex flex-col items-center gap-y-14">
+      <h1 className="text-white text-4xl">
+        - Project -
+      </h1>
+      <div className="flex gap-4 w-10/12 justify-center md:justify-start lg:justify-start">
+                  <Filterbox />
+                  <Filterbox />
+                  <Filterbox />
+                </div> 
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-10/12 place-items-center gap-10 ">
+        {ProjectData.map((p,i) => (
+          <Project key={i}/>
+        ))}
+      </div>
     </div>
-  )
+  );
 }

@@ -5,9 +5,12 @@ export default function ActivityList() {
 
   },[])
   return (
-    <div className=" flex flex-col items-center gap-y-16 mt-28 mx-56 min-h-screen">
-        <h1 className="text-white text-4xl bg-gradient-to-br from-white to-grey-10 bg-clip-text">- Activity -</h1>
-        <div className="flex w-full gap-10 justify-center px-20">
+    <div className="container max-w-screen-2xl mx-auto px-4 flex flex-col items-center gap-y-14">
+        <h1 className="text-white text-4xl ">- Activity -</h1>
+        <div className="grid md:grid-cols-1 lg:grid-cols-2 w-10/12 place-items-center gap-10">
+            <Activity />
+            <Activity />
+            <Activity />
             <Activity />
             <Activity />
         </div>

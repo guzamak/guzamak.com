@@ -12,6 +12,7 @@ export default function Hero() {
   const cretiveBoxRef = useRef<HTMLDivElement>(null);
   const passionBoxRef = useRef<HTMLDivElement>(null);
   const learningBoxRef = useRef<HTMLDivElement>(null);
+  const HeroRef = useRef<HTMLDivElement>(null);
   const [infoBoxCenterPos, setInfoCenterPos] = useState<Position>({
     x: 0,
     y: 0,
@@ -35,33 +36,59 @@ export default function Hero() {
   const [numsbox, setNumsBox] = useState<number>();
   const boxWidth = useRef(50);
 
-  useEffect(() => {
+  const getPostition = () => {
     const infoBox = personalInfoBoxRef.current?.getBoundingClientRect();
     const passionBox = passionBoxRef.current?.getBoundingClientRect();
     const cretiveBox = cretiveBoxRef.current?.getBoundingClientRect();
     const learningBox = learningBoxRef.current?.getBoundingClientRect();
+    // use for refer to start position of hero when scroll and getPostition run (abosolute of diff of y of screen and y of hero)
+    const HeroBox = HeroRef.current?.getBoundingClientRect();
 
-    if (infoBox && passionBox && cretiveBox && learningBox) {
-      const infoCenterPos = {
-        x: infoBox.right,
-        y: infoBox.top + (infoBox.bottom - infoBox.top) / 2,
-      };
+    if (infoBox && passionBox && cretiveBox && learningBox && HeroBox) {
+      let infoCenterPos ;
+      if (window.innerWidth < 700) {
+         infoCenterPos = {
+          x: infoBox.left + (infoBox.right - infoBox.left) / 2,
+          y: Math.abs(HeroBox.top) + infoBox.bottom ,
+        };
+      }else{
+         infoCenterPos = {
+          x: infoBox.right,
+          y: Math.abs(HeroBox.top) + infoBox.top + (infoBox.bottom - infoBox.top) / 2,
+        };
+      }
       const passionCenterPos = {
         x: passionBox.left,
-        y: passionBox.top + (passionBox.bottom - passionBox.top) / 2,
+        y: Math.abs(HeroBox.top) + passionBox.top + (passionBox.bottom - passionBox.top) / 2,
       };
       const cretiveCenterPos = {
         x: cretiveBox.left,
-        y: cretiveBox.top + (cretiveBox.bottom - cretiveBox.top) / 2,
+        y: Math.abs(HeroBox.top) + cretiveBox.top + (cretiveBox.bottom - cretiveBox.top) / 2,
       };
       const learningCenterPos = {
         x: learningBox.left,
-        y: learningBox.top + (learningBox.bottom - learningBox.top) / 2,
+        y: Math.abs(HeroBox.top) +learningBox.top + (learningBox.bottom - learningBox.top) / 2,
       };
       setInfoCenterPos(infoCenterPos);
       setPassionBoxCenterPos(passionCenterPos);
       setCretiveBoxCenterPos(cretiveCenterPos);
       setLearningBoxCenterPos(learningCenterPos);
+    }
+  }
+
+  const init = () => {
+    getPostition()
+  }
+
+  useEffect(()=>{
+    init()
+  },[])
+
+  useEffect(() => {
+    getPostition()
+    window.addEventListener("resize", init)
+    return ()=> {
+      window.removeEventListener("resize", init)
     }
   }, [passionPos, cretivePos, learningPos]);
 
@@ -91,7 +118,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <div className="w-screen h-[60vh] relative overflow-hidden bg-black bg-opacity-25 ">
+    <div className="w-screen h-[60vh] relative overflow-hidden bg-black bg-opacity-25 " ref={HeroRef}>
       <div className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,#40404012_1px,transparent_1px),linear-gradient(to_bottom,#40404012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
       {[passionBoxCenterPos, learningBoxCenterPos, cretiveBoxCenterPos].map(
         (pos, i) => (
