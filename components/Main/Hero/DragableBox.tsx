@@ -77,7 +77,7 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
       window.addEventListener("mousemove", onMouseMove);
       window.addEventListener("mouseup", onMouseUp);
       window.addEventListener("touchend", onMouseUp);
-      window.addEventListener("touchmove", onTouchMove,{passive:false});
+      window.addEventListener("touchmove", onTouchMove, { passive: false });
 
       return () => {
         window.removeEventListener("mousemove", onMouseMove);
@@ -90,15 +90,20 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
     return (
       <div
         ref={ref}
-        className="flex justify-center items-center w-28 h-10 shadow-[0px_5px_0_black] bg-gradient-to-bl from-grey-10 via-grey-06 via-60% to-grey-06 border-[1px] backdrop-blur-sm  border-grey-12  rounded-2xl text-absolute-white absolute "
+        className="flex justify-center items-center w-28 h-10 shadow-[0px_5px_0_black] bg-gradient-to-bl from-grey-10 via-grey-06 via-60% to-grey-06 border-[1px] backdrop-blur-sm  border-grey-12  rounded-2xl text-absolute-white absolute hover:cursor-grab "
         style={{ left: `${boxPos.x}px`, top: `${boxPos.y}px` }}
         onMouseDown={onMouseDown}
         onTouchStart={onTouchDown}
         draggable={false}
-      >       
+      >
         <div className="bg-grey-06 rounded-full h-4 w-4  border-[1px] border-grey-12 absolute left-0 -translate-x-2"></div>
-        <div draggable={false} className="select-none pointer-events-none overflow-hidden relative">
-          <p draggable={false} className="text-xs ">{title}</p>
+        <div
+          draggable={false}
+          className="select-none pointer-events-none overflow-hidden relative"
+        >
+          <p draggable={false} className="text-xs ">
+            {title}
+          </p>
         </div>
       </div>
     );
