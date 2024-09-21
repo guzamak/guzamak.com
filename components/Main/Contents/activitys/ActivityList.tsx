@@ -12,7 +12,6 @@ export default function ActivityList() {
             <Activity />
             <Activity />
             <Activity />
-            <Activity />
         </div>
     </div>
   )

@@ -46,7 +46,7 @@ export default function Hero() {
 
     if (infoBox && passionBox && cretiveBox && learningBox && HeroBox) {
       let infoCenterPos ;
-      if (window.innerWidth < 700) {
+      if (window.innerWidth < 700 ) {
          infoCenterPos = {
           x: infoBox.left + (infoBox.right - infoBox.left) / 2,
           y: Math.abs(HeroBox.top) + infoBox.bottom ,

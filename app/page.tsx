@@ -7,7 +7,7 @@ import Banner from "@/components/Main/Contents/Banner";
 import Skill from "@/components/Main/Contents/Skill";
 export default function Home() {
   return (
-    <main className="bg-grey-06 overflow-x-hidden flex flex-col gap-24">
+    <main className="bg-grey-06 flex flex-col gap-24 overflow-hidden">
       <Hero />
       <Introduction />
        <ProjectList />
