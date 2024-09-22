@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import DragableBox from "./DragableBox";
 import Mainbox from "./Mainbox";
-import { getDistance, getAngle } from "@/lib/canvasUlit";
+import { getDistance, getAngle, getMinResposiveSize } from "@/lib/canvasUlit";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 interface Position {
   x: number;
@@ -37,24 +37,24 @@ export default function Hero() {
   const [numsbox, setNumsBox] = useState<number>();
   const {innerWidth,innerHeight} = useWindowDimensions();
   const boxWidth = useRef(50);
+  console.log(innerWidth)
 
   const getBoxBoundingClientRect = () => {
     const infoBox = personalInfoBoxRef.current?.getBoundingClientRect();
     const passionBox = passionBoxRef.current?.getBoundingClientRect();
     const cretiveBox = cretiveBoxRef.current?.getBoundingClientRect();
     const learningBox = learningBoxRef.current?.getBoundingClientRect();
+    // use for refer to start position of hero when scroll and getDistanceOfBox run (abosolute of diff of y of screen and y of hero)
     const HeroBox = HeroRef.current?.getBoundingClientRect();
 
     return { infoBox, passionBox, cretiveBox, learningBox, HeroBox };
   };
   const getDistanceOfBox = () => {
-    const { infoBox, passionBox, cretiveBox, learningBox, HeroBox } =
-      getBoxBoundingClientRect();
-    // use for refer to start position of hero when scroll and getDistanceOfBox run (abosolute of diff of y of screen and y of hero)
+    const { infoBox, passionBox, cretiveBox, learningBox, HeroBox } = getBoxBoundingClientRect();
 
     if (infoBox && passionBox && cretiveBox && learningBox && HeroBox) {
       let infoCenterPos;
-      if (window.innerWidth < 768) {
+      if (innerWidth < 768) {
         // < md
         infoCenterPos = {
           x: infoBox.left + (infoBox.right - infoBox.left) / 2,
@@ -110,20 +110,32 @@ export default function Hero() {
 
   const getStartPosition = () => {
     const { infoBox, passionBox, cretiveBox, learningBox, HeroBox } = getBoxBoundingClientRect();
-    if (infoBox && passionBox && cretiveBox && learningBox && HeroBox) {
-      if (window.innerWidth < 768) {
-        // < md screen size
-        const scaleFactor = 1.5;
-        const startInfoPos = { x: HeroBox.width / 2 - (infoBox.height* scaleFactor) /2 , y: (HeroBox.height / 2) - ((infoBox.height* scaleFactor) ) };
-        const boxY = Math.abs(HeroBox.top) + HeroBox.bottom - ((HeroBox.height - (startInfoPos.y + infoBox.height)) / 2);
+    console.log(innerWidth)
+    if (infoBox && passionBox && cretiveBox && learningBox && HeroBox && typeof innerWidth != undefined && typeof innerHeight != undefined ) {
+      let scaleFactor = 1;
+      switch ( getMinResposiveSize(innerWidth,innerHeight)  ) {
+        case"sm" :
+          scaleFactor = 1.5;
+          break
+        case"md" :
+          scaleFactor = 1.75;
+          break
+      }
+      const adjustedInfoWidth = infoBox.width * scaleFactor;
+      const adjustedInfoHeight = infoBox.height * scaleFactor;
+      if (innerWidth < 768) {
+        // < md screen size;
+
+        const startInfoPos = { x: HeroBox.width / 2 - adjustedInfoHeight /2 , y: (HeroBox.height / 2 - adjustedInfoWidth ) };
+        const yPos = Math.abs(HeroBox.top) + HeroBox.bottom - ((HeroBox.height - (startInfoPos.y + infoBox.height)) / 2);
         
         // use flex-row justify space-around idea to calculate a position 
         const availableWidth = HeroBox.width - passionBox.width - cretiveBox.width - learningBox.width;
         const spacing = availableWidth / 4;
     
-        const startPassionPos = { x: spacing, y: boxY };
-        const startCretivePos = { x: spacing * 2 + passionBox.width, y: boxY };
-        const startLearningPos = { x: spacing * 3 + passionBox.width + cretiveBox.width, y: boxY };
+        const startPassionPos = { x: spacing, y: yPos };
+        const startCretivePos = { x: spacing * 2 + passionBox.width, y: yPos };
+        const startLearningPos = { x: spacing * 3 + passionBox.width + cretiveBox.width, y: yPos };
     
         setPositon(
           startInfoPos,
@@ -131,55 +143,68 @@ export default function Hero() {
           startPassionPos,
           startLearningPos
         );
-      // } else if (window.innerWidth < 1024) { 
-      //   //  < lg
-      //   const startinfoPos = { x: HeroBox.width / 4 - infoBox.width / 2 , y: HeroBox.height /2  - infoBox.height/2 }
-      //   const boxX = HeroBox.bottom - ((HeroBox.height - (startinfoPos.y+infoBox.height))/2 )
-      //   setPositon(
-      //     startinfoPos,
-      //     { x: boxX , y: 0 },
-      //     { x: boxX , y: 0 },
-      //     { x: boxX , y: 0 },
-      //   );
-      // } else if (window.innerWidth <  1536) {
-      //   //  > lg
-      //   const gap = 5
-      //   const startinfoPos = { x: HeroBox.width / 4.5 - infoBox.width / 2 , y: HeroBox.height /2  - infoBox.height/2 }
-      //   setPositon(
-      //     startinfoPos,
-      //     { x: 0 , y: 0 },
-      //     { x: 0 , y: 0 },
-      //     { x: 0 , y: 0 },
-      //   );
-      // } else{
-      //   const gap = 5
-      //   const startinfoPos = { x: ((window.innerWidth - 1536)/2) +(1536 / 4.5) - infoBox.width / 2 , y: (HeroBox.height /2  - infoBox.height/2) }
-      //   setPositon(
-      //     startinfoPos,
-      //     { x: 0 , y: 0 },
-      //     { x: 0 , y: 0 },
-      //     { x: 0 , y: 0 },
-      //   );
+      } else if (innerWidth < 1024) { 
+        //  < lg
+
+        const startinfoPos = { x: HeroBox.width / 4 - adjustedInfoWidth / 2 , y: HeroBox.height /2  - adjustedInfoHeight/2 }
+        const xPos = HeroBox.right - ((HeroBox.width - (startinfoPos.x+adjustedInfoWidth))/3 )
+
+        const availableHeight = HeroBox.height - passionBox.height - cretiveBox.height - learningBox.height;
+        const spacing = availableHeight / 4;
+    
+        const startPassionPos = { x: xPos, y: spacing };
+        const startCretivePos = { x: xPos , y: spacing * 2 + passionBox.height };
+        const startLearningPos = { x: xPos, y: spacing * 3 + 2* passionBox.height };
+        setPositon(
+          startinfoPos,
+          startPassionPos,
+          startCretivePos,
+          startLearningPos,
+        );
+      } else if (innerWidth < 1536) {
+        //  < xl
+        const startinfoPos = { x: HeroBox.width / 4.5 - adjustedInfoWidth / 2 , y: HeroBox.height /2  - adjustedInfoHeight/2 }
+        const xPos = HeroBox.right - ((HeroBox.width - startinfoPos.x- adjustedInfoWidth)/4 )
+
+        const availableHeight = HeroBox.height - passionBox.height - cretiveBox.height - learningBox.height;
+        const spacing = availableHeight / 4;
+    
+        const startPassionPos = { x: xPos, y: spacing };
+        const startCretivePos = { x: xPos , y: spacing * 2 + passionBox.height };
+        const startLearningPos = { x: xPos, y: spacing * 3 + 2* passionBox.height };
+        setPositon(
+          startinfoPos,
+          startPassionPos,
+          startCretivePos,
+          startLearningPos,
+        );
+      } else{
+        const startinfoPos = { x: ((HeroBox.width-1536)/2) +(1536 / 5) - adjustedInfoWidth / 2 , y: (HeroBox.height /2  - adjustedInfoHeight/2) }
+        const xPos = (HeroBox.right - (HeroBox.width-1536)/2) - ((HeroBox.width - (HeroBox.width-1536)/2  - startinfoPos.x- adjustedInfoWidth) / 5 )
+
+        const availableHeight = HeroBox.height - passionBox.height - cretiveBox.height - learningBox.height;
+        const spacing = availableHeight / 4;
+    
+        const startPassionPos = { x: xPos, y: spacing };
+        const startCretivePos = { x: xPos , y: spacing * 2 + passionBox.height };
+        const startLearningPos = { x: xPos, y: spacing * 3 + 2* passionBox.height };
+        setPositon(
+          startinfoPos,
+          startPassionPos,
+          startCretivePos,
+          startLearningPos,
+        );
       }
     }
   };
 
-  const init = () => {
+  useEffect(() => {
     getStartPosition();
-    getDistanceOfBox();
     dashline();
-  };
-
-  useEffect(() => {
-    init();
-  }, []);
+  }, [innerWidth,innerHeight]);
 
   useEffect(() => {
     getDistanceOfBox();
-    window.addEventListener("resize", init);
-    return () => {
-      window.removeEventListener("resize", init);
-    };
   }, [passionPos, cretivePos, learningPos]);
 
   const createLineStyle = (start: Position, end: Position) => {

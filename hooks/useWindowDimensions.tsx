@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 
 const useWindowDimensions = () => {
   const [windowDimensions, setWindowDimensions] = useState({
-    innerWidth: window.innerWidth,
-    innerHeight: window.innerHeight,
+    innerWidth: 0,
+    innerHeight: 0,
   });
 
   useEffect(() => {
@@ -13,7 +13,7 @@ const useWindowDimensions = () => {
         innerHeight: window.innerHeight,
       });
     };
-
+    handleResize()
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);

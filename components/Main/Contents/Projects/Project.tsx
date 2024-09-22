@@ -51,7 +51,7 @@ export default function Project({
         <h1 className="text-gray-400 text-xl opacity-50">{title}</h1>
         <p className="text-grey-25 ">{desc}</p>
       </div>
-      <div className="flex gap-4 absolute bottom-10 left-10 items-center">
+      <div className="flex gap-4 absolute bottom-5 left-10 items-center">
         {Object.keys(url).map((key) => {
           const Component = urlMap[key];
           return (
