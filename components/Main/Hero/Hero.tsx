@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import DragableBox from "./DragableBox";
 import Mainbox from "./Mainbox";
 import { getDistance, getAngle } from "@/lib/canvasUlit";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 interface Position {
   x: number;
   y: number;
@@ -34,6 +35,7 @@ export default function Hero() {
   const [learningPos, setLearningPos] = useState<Position>({ x: 0, y: 0 });
   const [infoPos, setInfoPos] = useState<Position>({ x: 0, y: 0 });
   const [numsbox, setNumsBox] = useState<number>();
+  const {innerWidth,innerHeight} = useWindowDimensions();
   const boxWidth = useRef(50);
 
   const getBoxBoundingClientRect = () => {

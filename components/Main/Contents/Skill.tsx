@@ -12,6 +12,7 @@ import {
 import { RiTailwindCssFill } from "react-icons/ri";
 import { RiNextjsFill } from "react-icons/ri";
 import Link from "next/link";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 const skillMap = [
   FaHtml5,
   FaCss3Alt,
@@ -21,18 +22,16 @@ const skillMap = [
   FaJs,
   FaPython,
 ];
+import { getMinResposiveSize } from "@/lib/canvasUlit";
 
 export default function Skill() {
   const [skilldeg, setSkillsdeg] = useState(0);
   const [svgLength, setSvgLength] = useState(0);
-  const [innerWidth, setInnerWidth] = useState(0);
-  const [innerHeight, setInnerHeight] = useState(0);
+  const { innerWidth, innerHeight } = useWindowDimensions();
   const textRef = useRef<SVGTextElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
-      setInnerWidth(window.innerWidth)
-      setInnerHeight(window.innerHeight)
       if (textRef.current) {
       const boundingBox = textRef.current?.getBoundingClientRect();
       const textWidth = boundingBox.width;
@@ -64,10 +63,6 @@ export default function Skill() {
       return Math.min(innerHeight,900)
 
   }
-  const getlgResposive = () => {
-    return Math.min(innerWidth,innerHeight) < 1000
-
-  }
 
   return (
     <div className="w-screen max-h-[900px] h-screen relative flex flex-col justify-center items-center overflow-hidden">
@@ -79,7 +74,7 @@ export default function Skill() {
               x={`0`}
               y={`25`}
               textAnchor="left "
-              fontSize={`${ getlgResposive() ? "30": "40"}`}
+              fontSize={`${ getMinResposiveSize(innerWidth,innerHeight) == "lg" ? "30": "40"}`}
               fill="white"
               fillOpacity={1}
               strokeWidth="1"
@@ -106,7 +101,7 @@ export default function Skill() {
                     x={`${innerWidth * (k / svgLength)}`}
                     y={`${(innerHeight / 8) * 0.5} `}
                     textAnchor="left "
-                    fontSize={`${ getlgResposive() ? "30": "40"}`}
+                    fontSize={`${ getMinResposiveSize(innerWidth,innerHeight) == "lg" ? "30": "40"}`}
                     fill="white"
                     fillOpacity={i % 2}
                     strokeWidth="0.25"
@@ -154,7 +149,7 @@ export default function Skill() {
                 } rounded-full flex justify-center items-center`}
               >
                 <Skill
-                  size={ (getlgResposive() ? 35: 50)}
+                  size={ (getMinResposiveSize(innerWidth,innerHeight) == "lg" ? 35: 50)}
                   className=" text-grey-25 cursor-pointer hover:text-grey-40  duration-700"
                 />
               </div>
