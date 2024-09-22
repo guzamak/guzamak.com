@@ -24,36 +24,23 @@ const skillMap = [
 
 export default function Skill() {
   const [skilldeg, setSkillsdeg] = useState(0);
-  const [innerWidth, setInnerWidth] = useState(0);
-  const [innerHeight, setInnerHeight] = useState(0);
   const [svgLength, setSvgLength] = useState(0);
-  const [textWidth, setTextWidth] = useState(0);
   const textRef = useRef<SVGTextElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
-      setInnerWidth(window.innerWidth);
-      setInnerHeight(window.innerHeight);
+      if (textRef.current) {
+      const boundingBox = textRef.current?.getBoundingClientRect();
+      const textWidth = boundingBox.width;
+      const len = Math.ceil(window.innerWidth / (textWidth  + textWidth+ 50));
+      setSvgLength(len);
+      }
     };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [textRef]);
 
-  useEffect(() => {
-    if (innerWidth) {
-      // width / textwidth + gap
-      const len = Math.ceil(Math.min(innerWidth,900) / (textWidth + textWidth + 50));
-      setSvgLength(len);
-    }
-  }, [innerWidth, textWidth]);
-
-  useEffect(() => {
-    if (textRef.current) {
-      const boundingBox = textRef.current?.getBoundingClientRect();
-      setTextWidth(boundingBox.width);
-    }
-  }, [innerWidth, innerHeight]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,17 +56,24 @@ export default function Skill() {
     return () => clearInterval(interval);
   }, [skilldeg]);
 
+  const getMaxHeight= () => {
+    return Math.min(innerHeight,900)
+  }
+  const getlgResposive = () => {
+    return Math.min(window.innerWidth,window.innerHeight) < 1000
+  }
+
   return (
     <div className="w-screen max-h-[900px] h-screen relative flex flex-col justify-center items-center overflow-hidden">
       <div className="w-full flex flex-col justify-between items-center ">
         {/* ref for text size in svg to calculate svgLength */}
         <div className="flex  opacity-5 absolute">
-          <svg width={innerWidth} height={Math.min(innerHeight,900) / 7}>
+          <svg width={ window.innerWidth} height={getMaxHeight() / 7}>
             <text
               x={`0`}
               y={`25`}
               textAnchor="left "
-              fontSize="40"
+              fontSize={`${ getlgResposive() ? "30": "40"}`}
               fill="white"
               fillOpacity={1}
               strokeWidth="1"
@@ -96,17 +90,17 @@ export default function Skill() {
           <div key={i} className="flex  opacity-10 ">
             {[...Array(3)].map((_, j) => (
               <svg
-                width={innerWidth}
-                height={Math.min(innerHeight,900) / 7}
+                width={window.innerWidth}
+                height={getMaxHeight() / 7}
                 key={j}
                 className="animate-loop-scroll"
               >
                 {[...Array(svgLength)].map((_, k) => (
                   <text
-                    x={`${innerWidth * (k / svgLength)}`}
-                    y={`${(innerHeight / 8) * 0.5} `}
+                    x={`${window.innerWidth * (k / svgLength)}`}
+                    y={`${(window.innerHeight / 8) * 0.5} `}
                     textAnchor="left "
-                    fontSize="40"
+                    fontSize={`${ getlgResposive() ? "30": "40"}`}
                     fill="white"
                     fillOpacity={i % 2}
                     strokeWidth="0.25"
@@ -135,14 +129,14 @@ export default function Skill() {
               style={{
                 opacity: `${(100 * skilldeg) / 180 / 100}`,
                 transform: `translate(-50%, -50%) translateX(${
-                  Math.min(200, ((innerHeight*innerWidth / 3)  / 100) * 20) *
+                  (window.innerWidth < 1024 ? 175: 200) *
                   Math.cos(
-                    ((index * skilldeg) / skillMap.length) * (Math.PI / 180)
+                    (index * (skilldeg / skillMap.length)) * (Math.PI / 180)
                   )
                 }px) translateY(${
-                  Math.min(200, ((innerHeight*innerWidth/3) / 100) * 20) *
+                  (window.innerWidth < 1024 ? 175: 200) *
                   Math.sin(
-                    ((index * skilldeg) / skillMap.length) * (Math.PI / 180)
+                    (index * (skilldeg / skillMap.length)) * (Math.PI / 180)
                   )
                 }px)`,
               }}
@@ -154,10 +148,7 @@ export default function Skill() {
                 } rounded-full flex justify-center items-center`}
               >
                 <Skill
-                  size={Math.min(
-                    (Math.min(innerHeight, innerWidth) / 100) * 10,
-                    50
-                  )}
+                  size={ (getlgResposive() ? 35: 50)}
                   className=" text-grey-25 cursor-pointer hover:text-grey-40  duration-700"
                 />
               </div>

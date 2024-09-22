@@ -111,42 +111,43 @@ export default function Hero() {
     if (infoBox && passionBox && cretiveBox && learningBox && HeroBox) {
       if (window.innerWidth < 768) {
         //  < md
-        const gap = passionBox.width / 4
         const startinfoPos = { x: HeroBox.width / 2 - infoBox.width / 2 , y: (HeroBox.height / 2 - infoBox.height) }
+        const boxY = HeroBox.bottom-  ((HeroBox.height - (startinfoPos.y+infoBox.height))/2 )
+        const gap = Math.min(HeroBox.width, HeroBox.height) / 10
         setPositon(
           startinfoPos,
-          { x: startinfoPos.x - cretiveBox.width - gap, y:  startinfoPos.y + infoBox.height + (3*passionBox.height) },
-          { x: startinfoPos.x, y:startinfoPos.y + infoBox.height + (3*passionBox.height) + gap  },
-          { x: startinfoPos.x + learningBox.width + gap, y:  startinfoPos.y + infoBox.height + (3*passionBox.height) }
+          { x: startinfoPos.x - cretiveBox.width - gap , y: boxY},
+          { x: startinfoPos.x, y:boxY },
+          { x: startinfoPos.x + learningBox.width + gap, y:  boxY }
         );
       } else if (window.innerWidth < 1024) {
         //  < lg
-        const gap = passionBox.width / 1.5
+        const gap = 2.5
         const startinfoPos = { x: HeroBox.width / 4 - infoBox.width / 2 , y: (HeroBox.height /2  - infoBox.height/2) }
         setPositon(
           startinfoPos,
-          { x: HeroBox.width -cretiveBox.width -gap , y: (HeroBox.height /2  - passionBox.height/2) - (3*cretiveBox.height) },
-          { x: HeroBox.width - passionBox.width -(2 * gap) , y: (HeroBox.height /2  - passionBox.height/2) },
-          { x: HeroBox.width - learningBox.width -gap , y: (HeroBox.height /2  - passionBox.height/2) + (3*learningBox.height) }
+          { x: 0 , y: 0 },
+          { x: 0 , y: 0 },
+          { x: 0 , y: 0 },
         );
       } else if (window.innerWidth <  1536) {
         //  > lg
-        const gap = passionBox.width 
+        const gap = 5
         const startinfoPos = { x: HeroBox.width / 4.5 - infoBox.width / 2 , y: (HeroBox.height /2  - infoBox.height/2) }
         setPositon(
           startinfoPos,
-          { x: HeroBox.width/1.15 - cretiveBox.width -gap , y: (HeroBox.height /2  - passionBox.height/2) - (3*cretiveBox.height) },
-          { x: HeroBox.width/1.15 - passionBox.width -(2 * gap) , y: (HeroBox.height /2  - passionBox.height/2) },
-          { x: HeroBox.width/1.15 - learningBox.width -gap , y: (HeroBox.height /2  - passionBox.height/2) + (3*learningBox.height) }
+          { x: 0 , y: 0 },
+          { x: 0 , y: 0 },
+          { x: 0 , y: 0 },
         );
       } else{
-        const gap = passionBox.width 
+        const gap = 5
         const startinfoPos = { x: ((window.innerWidth - 1536)/2) + Math.min(HeroBox.width,1536) / 4.5 - infoBox.width / 2 , y: (HeroBox.height /2  - infoBox.height/2) }
         setPositon(
           startinfoPos,
-          { x: ((window.innerWidth - 1536)/2) +  Math.min(HeroBox.width,1536)/1.15 - cretiveBox.width -gap , y: (HeroBox.height /2  - passionBox.height/2) - (3*cretiveBox.height) },
-          { x: ((window.innerWidth - 1536)/2) + Math.min(HeroBox.width,1536)/1.15 - passionBox.width -(2 * gap) , y: (HeroBox.height /2  - passionBox.height/2) },
-          { x: ((window.innerWidth - 1536)/2) + Math.min(HeroBox.width,1536)/1.15 - learningBox.width -gap , y: (HeroBox.height /2  - passionBox.height/2) + (3*learningBox.height) }
+          { x: 0 , y: 0 },
+          { x: 0 , y: 0 },
+          { x: 0 , y: 0 },
         );
       }
     }
