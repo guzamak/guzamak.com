@@ -25,14 +25,18 @@ const skillMap = [
 export default function Skill() {
   const [skilldeg, setSkillsdeg] = useState(0);
   const [svgLength, setSvgLength] = useState(0);
+  const [innerWidth, setInnerWidth] = useState(0);
+  const [innerHeight, setInnerHeight] = useState(0);
   const textRef = useRef<SVGTextElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
+      setInnerWidth(window.innerWidth)
+      setInnerHeight(window.innerHeight)
       if (textRef.current) {
       const boundingBox = textRef.current?.getBoundingClientRect();
       const textWidth = boundingBox.width;
-      const len = Math.ceil(window.innerWidth / (textWidth  + textWidth+ 50));
+      const len = Math.ceil(window.innerWidth / (textWidth  + textWidth + 50));
       setSvgLength(len);
       }
     };
@@ -57,10 +61,12 @@ export default function Skill() {
   }, [skilldeg]);
 
   const getMaxHeight= () => {
-    return Math.min(innerHeight,900)
+      return Math.min(innerHeight,900)
+
   }
   const getlgResposive = () => {
-    return Math.min(window.innerWidth,window.innerHeight) < 1000
+    return Math.min(innerWidth,innerHeight) < 1000
+
   }
 
   return (
@@ -68,7 +74,7 @@ export default function Skill() {
       <div className="w-full flex flex-col justify-between items-center ">
         {/* ref for text size in svg to calculate svgLength */}
         <div className="flex  opacity-5 absolute">
-          <svg width={ window.innerWidth} height={getMaxHeight() / 7}>
+          <svg width={innerWidth} height={getMaxHeight() / 7}>
             <text
               x={`0`}
               y={`25`}
@@ -85,20 +91,20 @@ export default function Skill() {
               Thank You
             </text>
           </svg>
-        </div>
+        </div> 
         {[...Array(5)].map((_, i) => (
           <div key={i} className="flex  opacity-10 ">
             {[...Array(3)].map((_, j) => (
               <svg
-                width={window.innerWidth}
+                width={innerWidth}
                 height={getMaxHeight() / 7}
                 key={j}
                 className="animate-loop-scroll"
               >
                 {[...Array(svgLength)].map((_, k) => (
                   <text
-                    x={`${window.innerWidth * (k / svgLength)}`}
-                    y={`${(window.innerHeight / 8) * 0.5} `}
+                    x={`${innerWidth * (k / svgLength)}`}
+                    y={`${(innerHeight / 8) * 0.5} `}
                     textAnchor="left "
                     fontSize={`${ getlgResposive() ? "30": "40"}`}
                     fill="white"
@@ -129,12 +135,12 @@ export default function Skill() {
               style={{
                 opacity: `${(100 * skilldeg) / 180 / 100}`,
                 transform: `translate(-50%, -50%) translateX(${
-                  (window.innerWidth < 1024 ? 175: 200) *
+                  (innerWidth < 1024 ? 175: 200) *
                   Math.cos(
                     (index * (skilldeg / skillMap.length)) * (Math.PI / 180)
                   )
                 }px) translateY(${
-                  (window.innerWidth < 1024 ? 175: 200) *
+                  (innerWidth < 1024 ? 175: 200) *
                   Math.sin(
                     (index * (skilldeg / skillMap.length)) * (Math.PI / 180)
                   )

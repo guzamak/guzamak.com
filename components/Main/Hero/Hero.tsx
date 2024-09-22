@@ -110,45 +110,54 @@ export default function Hero() {
     const { infoBox, passionBox, cretiveBox, learningBox, HeroBox } = getBoxBoundingClientRect();
     if (infoBox && passionBox && cretiveBox && learningBox && HeroBox) {
       if (window.innerWidth < 768) {
-        //  < md
-        const startinfoPos = { x: HeroBox.width / 2 - infoBox.width / 2 , y: (HeroBox.height / 2 - infoBox.height) }
-        const boxY = HeroBox.bottom-  ((HeroBox.height - (startinfoPos.y+infoBox.height))/2 )
-        const gap = Math.min(HeroBox.width, HeroBox.height) / 10
+        // < md screen size
+        const scaleFactor = 1.5;
+        const startInfoPos = { x: HeroBox.width / 2 - (infoBox.height* scaleFactor) /2 , y: (HeroBox.height / 2) - ((infoBox.height* scaleFactor) ) };
+        const boxY = Math.abs(HeroBox.top) + HeroBox.bottom - ((HeroBox.height - (startInfoPos.y + infoBox.height)) / 2);
+        
+        // use flex-row justify space-around idea to calculate a position 
+        const availableWidth = HeroBox.width - passionBox.width - cretiveBox.width - learningBox.width;
+        const spacing = availableWidth / 4;
+    
+        const startPassionPos = { x: spacing, y: boxY };
+        const startCretivePos = { x: spacing * 2 + passionBox.width, y: boxY };
+        const startLearningPos = { x: spacing * 3 + passionBox.width + cretiveBox.width, y: boxY };
+    
         setPositon(
-          startinfoPos,
-          { x: startinfoPos.x - cretiveBox.width - gap , y: boxY},
-          { x: startinfoPos.x, y:boxY },
-          { x: startinfoPos.x + learningBox.width + gap, y:  boxY }
+          startInfoPos,
+          startCretivePos,
+          startPassionPos,
+          startLearningPos
         );
-      } else if (window.innerWidth < 1024) {
-        //  < lg
-        const gap = 2.5
-        const startinfoPos = { x: HeroBox.width / 4 - infoBox.width / 2 , y: (HeroBox.height /2  - infoBox.height/2) }
-        setPositon(
-          startinfoPos,
-          { x: 0 , y: 0 },
-          { x: 0 , y: 0 },
-          { x: 0 , y: 0 },
-        );
-      } else if (window.innerWidth <  1536) {
-        //  > lg
-        const gap = 5
-        const startinfoPos = { x: HeroBox.width / 4.5 - infoBox.width / 2 , y: (HeroBox.height /2  - infoBox.height/2) }
-        setPositon(
-          startinfoPos,
-          { x: 0 , y: 0 },
-          { x: 0 , y: 0 },
-          { x: 0 , y: 0 },
-        );
-      } else{
-        const gap = 5
-        const startinfoPos = { x: ((window.innerWidth - 1536)/2) + Math.min(HeroBox.width,1536) / 4.5 - infoBox.width / 2 , y: (HeroBox.height /2  - infoBox.height/2) }
-        setPositon(
-          startinfoPos,
-          { x: 0 , y: 0 },
-          { x: 0 , y: 0 },
-          { x: 0 , y: 0 },
-        );
+      // } else if (window.innerWidth < 1024) { 
+      //   //  < lg
+      //   const startinfoPos = { x: HeroBox.width / 4 - infoBox.width / 2 , y: HeroBox.height /2  - infoBox.height/2 }
+      //   const boxX = HeroBox.bottom - ((HeroBox.height - (startinfoPos.y+infoBox.height))/2 )
+      //   setPositon(
+      //     startinfoPos,
+      //     { x: boxX , y: 0 },
+      //     { x: boxX , y: 0 },
+      //     { x: boxX , y: 0 },
+      //   );
+      // } else if (window.innerWidth <  1536) {
+      //   //  > lg
+      //   const gap = 5
+      //   const startinfoPos = { x: HeroBox.width / 4.5 - infoBox.width / 2 , y: HeroBox.height /2  - infoBox.height/2 }
+      //   setPositon(
+      //     startinfoPos,
+      //     { x: 0 , y: 0 },
+      //     { x: 0 , y: 0 },
+      //     { x: 0 , y: 0 },
+      //   );
+      // } else{
+      //   const gap = 5
+      //   const startinfoPos = { x: ((window.innerWidth - 1536)/2) +(1536 / 4.5) - infoBox.width / 2 , y: (HeroBox.height /2  - infoBox.height/2) }
+      //   setPositon(
+      //     startinfoPos,
+      //     { x: 0 , y: 0 },
+      //     { x: 0 , y: 0 },
+      //     { x: 0 , y: 0 },
+      //   );
       }
     }
   };

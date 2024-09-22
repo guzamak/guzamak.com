@@ -15,8 +15,9 @@ export default function Activity({ imagePath, title, desc }: ActivityProp) {
             src={imagePath}
             alt=""
             fill
-            objectFit="cover"
-            className="w-full h-full opacity-75"
+            priority={true}
+            sizes="100%"
+            className="w-full h-full opacity-75 object-cover"
           />
         </div>
       </div>

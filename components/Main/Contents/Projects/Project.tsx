@@ -41,8 +41,9 @@ export default function Project({
           src={imagePath[0]}
           alt=""
           fill
-          objectFit="cover"
-          className="w-full h-full opacity-70 group-hover:scale-110 group-hover:-translate-y-2 duration-500"
+          sizes="100%"
+          priority={true}
+          className="w-full h-full opacity-70 group-hover:scale-110 group-hover:-translate-y-2 duration-500 object-cover"
         />
         </div>
       </div>
