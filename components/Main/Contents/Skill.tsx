@@ -70,7 +70,7 @@ export default function Skill() {
   }, [skilldeg]);
 
   return (
-    <div className="w-screen max-h-[900px] h-screen relative flex flex-col justify-center items-center ">
+    <div className="w-screen max-h-[900px] h-screen relative flex flex-col justify-center items-center overflow-hidden">
       <div className="w-full flex flex-col justify-between items-center ">
         {/* ref for text size in svg to calculate svgLength */}
         <div className="flex  opacity-5 absolute">

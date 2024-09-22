@@ -34,15 +34,17 @@ export default function Project({
 }: ProjectProp) {
   useEffect(() => {}, []);
   return (
-    <div className="flex flex-col items-center gap-10 hover:shadow-[0px_3px_0_black] duration-500 border-[1px]  border-grey-12  rounded-2xl w-full min-w-64 max-w-96 h-[450px] p-10 relative">
-      <div className="w-full h-[40%] border-grey-12  rounded-2xl text-absolute-white overflow-hidden">
-        {/* <Image
+    <div className="flex flex-col items-center gap-10 hover:shadow-[0px_3px_0_black] duration-500 border-[1px]  border-grey-12  rounded-2xl w-full min-w-64 max-w-96 h-[450px] p-10 relative group">
+      <div className="w-full h-[40%] border-grey-15 border-2  rounded-2xl overflow-hidden">
+      <div className="relative w-full h-full">
+        <Image
           src={imagePath[0]}
           alt=""
           fill
           objectFit="cover"
-          className="w-full h-full opacity-75"
-        /> */}
+          className="w-full h-full opacity-70 group-hover:scale-110 group-hover:-translate-y-2 duration-500"
+        />
+        </div>
       </div>
       <div className="flex flex-col gap-4 w-full">
         <h1 className="text-gray-400 text-xl opacity-50">{title}</h1>
