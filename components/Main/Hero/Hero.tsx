@@ -180,7 +180,7 @@ export default function Hero() {
         );
       } else{
         const startinfoPos = { x: ((HeroBox.width-1536)/2) +(1536 / 5) - adjustedInfoWidth / 2 , y: (HeroBox.height /2  - adjustedInfoHeight/2) }
-        const xPos = (HeroBox.right - (HeroBox.width-1536)/2) - ((HeroBox.width - (HeroBox.width-1536)/2  - startinfoPos.x- adjustedInfoWidth) / 5 )
+        const xPos = (HeroBox.right - (HeroBox.width-1536)/2) - Math.min((HeroBox.width - startinfoPos.x - adjustedInfoWidth) / 5 ,HeroBox.width -(HeroBox.width-1536) /2 - cretiveBox.width)
 
         const availableHeight = HeroBox.height - passionBox.height - cretiveBox.height - learningBox.height;
         const spacing = availableHeight / 4;

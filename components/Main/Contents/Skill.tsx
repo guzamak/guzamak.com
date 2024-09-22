@@ -22,6 +22,22 @@ const skillMap = [
   FaJs,
   FaPython,
 ];
+const fontSizeMap = {
+      "sm" : "20",
+      "md" : "25",
+      "lg" : "30",
+      "xl" :  "50",
+      "2xl": "50",
+}
+
+const skillSizeMap = {
+  "sm" : 30,
+      "md" : 30,
+      "lg" : 35,
+      "xl" :  50,
+      "2xl": 50,
+}
+
 import { getMinResposiveSize } from "@/lib/canvasUlit";
 
 export default function Skill() {
@@ -74,7 +90,7 @@ export default function Skill() {
               x={`0`}
               y={`25`}
               textAnchor="left "
-              fontSize={`${ getMinResposiveSize(innerWidth,innerHeight) == "lg" ? "30": "40"}`}
+              fontSize={`${ fontSizeMap[getMinResposiveSize(innerWidth,innerHeight)]}`}
               fill="white"
               fillOpacity={1}
               strokeWidth="1"
@@ -101,7 +117,7 @@ export default function Skill() {
                     x={`${innerWidth * (k / svgLength)}`}
                     y={`${(innerHeight / 8) * 0.5} `}
                     textAnchor="left "
-                    fontSize={`${ getMinResposiveSize(innerWidth,innerHeight) == "lg" ? "30": "40"}`}
+                    fontSize={`${ fontSizeMap[getMinResposiveSize(innerWidth,innerHeight)]}`}
                     fill="white"
                     fillOpacity={i % 2}
                     strokeWidth="0.25"
@@ -149,7 +165,7 @@ export default function Skill() {
                 } rounded-full flex justify-center items-center`}
               >
                 <Skill
-                  size={ (getMinResposiveSize(innerWidth,innerHeight) == "lg" ? 35: 50)}
+                  size={ skillSizeMap[getMinResposiveSize(innerWidth,innerHeight)] }
                   className=" text-grey-25 cursor-pointer hover:text-grey-40  duration-700"
                 />
               </div>
