@@ -43,7 +43,7 @@ export default function Skill() {
   useEffect(() => {
     if (innerWidth) {
       // width / textwidth + gap
-      const len = Math.ceil(innerWidth / (textWidth + textWidth + 50));
+      const len = Math.ceil(Math.min(innerWidth,900) / (textWidth + textWidth + 50));
       setSvgLength(len);
     }
   }, [innerWidth, textWidth]);
@@ -74,7 +74,7 @@ export default function Skill() {
       <div className="w-full flex flex-col justify-between items-center ">
         {/* ref for text size in svg to calculate svgLength */}
         <div className="flex  opacity-5 absolute">
-          <svg width={innerWidth} height={innerHeight / 8}>
+          <svg width={innerWidth} height={Math.min(innerHeight,900) / 7}>
             <text
               x={`0`}
               y={`25`}
@@ -97,7 +97,7 @@ export default function Skill() {
             {[...Array(3)].map((_, j) => (
               <svg
                 width={innerWidth}
-                height={innerHeight / 7}
+                height={Math.min(innerHeight,900) / 7}
                 key={j}
                 className="animate-loop-scroll"
               >
@@ -135,12 +135,12 @@ export default function Skill() {
               style={{
                 opacity: `${(100 * skilldeg) / 180 / 100}`,
                 transform: `translate(-50%, -50%) translateX(${
-                  Math.min(200, ((innerHeight * innerWidth) / 2 / 100) * 20) *
+                  Math.min(200, ((innerHeight*innerWidth / 3)  / 100) * 20) *
                   Math.cos(
                     ((index * skilldeg) / skillMap.length) * (Math.PI / 180)
                   )
                 }px) translateY(${
-                  Math.min(200, ((innerHeight * innerWidth) / 2 / 100) * 20) *
+                  Math.min(200, ((innerHeight*innerWidth/3) / 100) * 20) *
                   Math.sin(
                     ((index * skilldeg) / skillMap.length) * (Math.PI / 180)
                   )
@@ -164,7 +164,7 @@ export default function Skill() {
             </div>
           ))}
         </div>
-        <div className="flex absolute bottom-5 gap-6">
+        <div className="flex justify-center items-center absolute bottom-0 gap-6 bg-grey-06 h-10 p-5 rounded-xl border-t-[1px] border-grey-12  ">
           <Link href="https://www.instagram.com/poke_skr27/" target="_blank">
             <FaInstagram className=" text-grey-15 cursor-pointer" size={20} />
           </Link>

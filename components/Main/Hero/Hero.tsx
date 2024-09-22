@@ -129,7 +129,7 @@ export default function Hero() {
           { x: HeroBox.width - passionBox.width -(2 * gap) , y: (HeroBox.height /2  - passionBox.height/2) },
           { x: HeroBox.width - learningBox.width -gap , y: (HeroBox.height /2  - passionBox.height/2) + (3*learningBox.height) }
         );
-      } else {
+      } else if (window.innerWidth <  1536) {
         //  > lg
         const gap = passionBox.width 
         const startinfoPos = { x: HeroBox.width / 4.5 - infoBox.width / 2 , y: (HeroBox.height /2  - infoBox.height/2) }
@@ -138,6 +138,15 @@ export default function Hero() {
           { x: HeroBox.width/1.15 - cretiveBox.width -gap , y: (HeroBox.height /2  - passionBox.height/2) - (3*cretiveBox.height) },
           { x: HeroBox.width/1.15 - passionBox.width -(2 * gap) , y: (HeroBox.height /2  - passionBox.height/2) },
           { x: HeroBox.width/1.15 - learningBox.width -gap , y: (HeroBox.height /2  - passionBox.height/2) + (3*learningBox.height) }
+        );
+      } else{
+        const gap = passionBox.width 
+        const startinfoPos = { x: ((window.innerWidth - 1536)/2) + Math.min(HeroBox.width,1536) / 4.5 - infoBox.width / 2 , y: (HeroBox.height /2  - infoBox.height/2) }
+        setPositon(
+          startinfoPos,
+          { x: ((window.innerWidth - 1536)/2) +  Math.min(HeroBox.width,1536)/1.15 - cretiveBox.width -gap , y: (HeroBox.height /2  - passionBox.height/2) - (3*cretiveBox.height) },
+          { x: ((window.innerWidth - 1536)/2) + Math.min(HeroBox.width,1536)/1.15 - passionBox.width -(2 * gap) , y: (HeroBox.height /2  - passionBox.height/2) },
+          { x: ((window.innerWidth - 1536)/2) + Math.min(HeroBox.width,1536)/1.15 - learningBox.width -gap , y: (HeroBox.height /2  - passionBox.height/2) + (3*learningBox.height) }
         );
       }
     }
