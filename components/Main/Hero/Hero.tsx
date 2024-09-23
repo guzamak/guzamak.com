@@ -3,6 +3,7 @@ import DragableBox from "./DragableBox";
 import Mainbox from "./Mainbox";
 import { getDistance, getAngle, getMinResposiveSize } from "@/lib/canvasUlit";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import Skeleton from "../Contents/Skeleton";
 interface Position {
   x: number;
   y: number;
@@ -36,8 +37,9 @@ export default function Hero() {
   const [infoPos, setInfoPos] = useState<Position>({ x: 0, y: 0 });
   const [numsbox, setNumsBox] = useState<number>();
   const {innerWidth,innerHeight} = useWindowDimensions();
+  const [boxBounding, setBoxBounding] = useState<any>({})
+  const [isReady, setIsReady] = useState(false);
   const boxWidth = useRef(50);
-  console.log(innerWidth)
 
   const getBoxBoundingClientRect = () => {
     const infoBox = personalInfoBoxRef.current?.getBoundingClientRect();
@@ -47,10 +49,11 @@ export default function Hero() {
     // use for refer to start position of hero when scroll and getDistanceOfBox run (abosolute of diff of y of screen and y of hero)
     const HeroBox = HeroRef.current?.getBoundingClientRect();
 
+    setBoxBounding({ infoBox, passionBox, cretiveBox, learningBox, HeroBox });
     return { infoBox, passionBox, cretiveBox, learningBox, HeroBox };
   };
   const getDistanceOfBox = () => {
-    const { infoBox, passionBox, cretiveBox, learningBox, HeroBox } = getBoxBoundingClientRect();
+    const { infoBox, passionBox, cretiveBox, learningBox, HeroBox } = boxBounding;
 
     if (infoBox && passionBox && cretiveBox && learningBox && HeroBox) {
       let infoCenterPos;
@@ -110,7 +113,6 @@ export default function Hero() {
 
   const getStartPosition = () => {
     const { infoBox, passionBox, cretiveBox, learningBox, HeroBox } = getBoxBoundingClientRect();
-    console.log(innerWidth)
     if (infoBox && passionBox && cretiveBox && learningBox && HeroBox && typeof innerWidth != undefined && typeof innerHeight != undefined ) {
       let scaleFactor = 1;
       switch ( getMinResposiveSize(innerWidth,innerHeight)  ) {
@@ -153,7 +155,7 @@ export default function Hero() {
     
         const startPassionPos = { x: xPos, y: spacing };
         const startCretivePos = { x: xPos , y: spacing * 2 + passionBox.height };
-        const startLearningPos = { x: xPos, y: spacing * 3 + 2* passionBox.height };
+        const startLearningPos = { x: xPos, y: spacing * 3 + passionBox.height + cretiveBox.height };
         setPositon(
           startinfoPos,
           startPassionPos,
@@ -170,7 +172,7 @@ export default function Hero() {
     
         const startPassionPos = { x: xPos, y: spacing };
         const startCretivePos = { x: xPos , y: spacing * 2 + passionBox.height };
-        const startLearningPos = { x: xPos, y: spacing * 3 + 2* passionBox.height };
+        const startLearningPos = { x: xPos, y: spacing * 3  + passionBox.height + cretiveBox.height };
         setPositon(
           startinfoPos,
           startPassionPos,
@@ -186,7 +188,7 @@ export default function Hero() {
     
         const startPassionPos = { x: xPos, y: spacing };
         const startCretivePos = { x: xPos , y: spacing * 2 + passionBox.height };
-        const startLearningPos = { x: xPos, y: spacing * 3 + 2* passionBox.height };
+        const startLearningPos = { x: xPos, y: spacing * 3  + passionBox.height + cretiveBox.height };
         setPositon(
           startinfoPos,
           startPassionPos,
@@ -199,12 +201,17 @@ export default function Hero() {
 
   useEffect(() => {
     getStartPosition();
-  }, [innerWidth,innerHeight]);
+  }, [innerWidth, innerHeight]);
+
+  useEffect(() => {
+    getBoxBoundingClientRect()
+  }, [passionPos, cretivePos, learningPos]);
 
   useEffect(() => {
     getDistanceOfBox();
     dashline();
-  }, [passionPos, cretivePos, learningPos]);
+    setIsReady(true);
+  },[boxBounding])
 
   const createLineStyle = (start: Position, end: Position) => {
     const distance = getDistance(start.x, start.y, end.x, end.y);
@@ -228,10 +235,10 @@ export default function Hero() {
 
   return (
     <div
-      className="w-screen min-h-[300px] h-[60vh] max-h-[900px] relative overflow-hidden bg-black bg-opacity-25 "
+      className="w-screen min-h-[300px] h-[60vh] max-h-[900px] overflow-hidden bg-black bg-opacity-25 relative"
       ref={HeroRef}
     >
-      <div className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,#40404012_1px,transparent_1px),linear-gradient(to_bottom,#40404012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className={`${isReady ? "opacity-100" : "opacity-0" } w-full h-full relative duration-700`}>
       {[passionBoxCenterPos, learningBoxCenterPos, cretiveBoxCenterPos].map(
         (pos, i) => (
           <div
@@ -258,26 +265,40 @@ export default function Hero() {
           </div>
         )
       )}
-      <div className="relative">
+      <div className="relative w-full h-full">
         <Mainbox ref={personalInfoBoxRef} boxPos={infoPos} />
         <DragableBox
           title="CRETIVE"
           setBoxPos={setCretivePos}
           boxPos={cretivePos}
           ref={cretiveBoxRef}
+          Herobox={boxBounding.HeroBox}
+          selfbox={boxBounding.cretiveBox}
         />
         <DragableBox
           title="PASSION"
           setBoxPos={setPassionPos}
           boxPos={passionPos}
           ref={passionBoxRef}
+          Herobox={boxBounding.HeroBox}
+          selfbox={boxBounding.passionBox}
         />
         <DragableBox
           title="LEARNING"
           setBoxPos={setLearningPos}
           boxPos={learningPos}
           ref={learningBoxRef}
+          Herobox={boxBounding.HeroBox}
+          selfbox={boxBounding.learningBox}
         />
+      </div>
+      </div>
+      <div
+        className={`${
+          !isReady ? "opacity-100" : "opacity-0"
+        } absolute top-0 w-full h-full duration-700`}
+      >
+      <Skeleton />
       </div>
     </div>
   );

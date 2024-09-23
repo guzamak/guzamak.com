@@ -43,7 +43,7 @@ export default function Project({
           fill
           sizes="100%"
           priority={true}
-          className="w-full h-full opacity-70 group-hover:scale-110 group-hover:-translate-y-2 duration-500 object-cover"
+          className="w-full h-full opacity-70 group-hover:scale-110 group-hover:-translate-y-2 group-hover:opacity-90 duration-500 object-cove "
         />
         </div>
       </div>

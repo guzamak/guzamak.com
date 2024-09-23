@@ -11,8 +11,8 @@ export default function Introduction() {
             Since then, I've loved coding and enjoy "cooking up" Funny projects.
           </p>
         </div>
-        <div className=" h-48 w-full rounded-xl overflow-hidden group relative">
-              <h1 className="absolute  text-4xl md:text-6xl text-grey-12 font-medium w-full h-full  flex justify-center items-center font-Jacquarda_Bastarda ">guzamak</h1>
+        <div className=" h-48 w-full rounded-xl overflow-hidden group relative flex justify-center items-center">
+              <h1 className="text-4xl md:text-6xl text-grey-12 font-medium font-Jacquarda_Bastarda ">guzamak</h1>
         </div>
       </div>
     </div>

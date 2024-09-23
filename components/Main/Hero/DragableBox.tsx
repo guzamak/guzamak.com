@@ -19,10 +19,12 @@ interface Props {
   title: string;
   setBoxPos: Dispatch<SetStateAction<Position>>;
   boxPos: Position;
+  Herobox :DOMRect | undefined;
+  selfbox :DOMRect | undefined;
 }
 const DraggableBox = forwardRef<HTMLDivElement, Props>(
   (
-    { title = "", setBoxPos = () => {}, boxPos = { x: 0, y: 0 } }: Props,
+    { title = "", setBoxPos = () => {}, boxPos = { x: 0, y: 0 },Herobox,selfbox }: Props,
     ref
   ) => {
     const [dragging, setDragging] = useState<boolean>(false);
@@ -41,12 +43,18 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
         const deltaX = e.pageX - mousePos.x;
         const deltaY = e.pageY - mousePos.y;
 
-        setBoxPos((prevPos) => ({
-          x: prevPos.x + deltaX,
-          y: prevPos.y + deltaY,
-        }));
-
-        setMousePos({ x: e.pageX, y: e.pageY });
+        if (Herobox && selfbox) {
+          const newX = boxPos.x + deltaX;
+          const newY = boxPos.y + deltaY;
+          if (
+            Herobox.bottom - 10 > newY + selfbox.height &&
+            newY > 0 &&
+            newX > 0 &&
+            Herobox.right - 10 > newX + selfbox.width
+          ) {
+            setBoxPos({ x: newX, y: newY });
+          }
+        }
       }
     };
 
@@ -63,12 +71,18 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
         const deltaX = touch.pageX - mousePos.x;
         const deltaY = touch.pageY - mousePos.y;
 
-        setBoxPos((prevPos) => ({
-          x: prevPos.x + deltaX,
-          y: prevPos.y + deltaY,
-        }));
-
-        setMousePos({ x: touch.pageX, y: touch.pageY });
+        if (Herobox && selfbox) {
+          const newX = boxPos.x + deltaX;
+          const newY = boxPos.y + deltaY;
+          if (
+            Herobox.bottom - 10 > newY + selfbox.height &&
+            newY > 0 &&
+            newX > 0 &&
+            Herobox.right - 10 > newX + selfbox.width
+          ) {
+            setBoxPos({ x: newX, y: newY });
+          }
+        }
       }
     };
 
