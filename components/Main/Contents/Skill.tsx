@@ -202,7 +202,7 @@ export default function Skill() {
       <div
         className={`${
           !isReady ? "opacity-100" : "opacity-0"
-        } absolute top-0 w-full h-full duration-700`}
+        } absolute top-0 w-full h-full duration-700 pointer-events-none`}
       >
       <Skeleton />
       </div>
