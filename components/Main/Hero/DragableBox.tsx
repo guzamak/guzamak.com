@@ -30,7 +30,6 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
 
     const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
       setDragging(true);
-      console.log(e.pageX);
       setMousePos({ x: e.pageX, y: e.pageY });
     };
     const onMouseUp = () => {
@@ -90,7 +89,8 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
     return (
       <div
         ref={ref}
-        className="flex justify-center items-center w-28 h-10 shadow-[0px_5px_0_black] bg-gradient-to-bl from-grey-10 via-grey-06 via-60% to-grey-06 border-[1px] backdrop-blur-sm  border-grey-12  rounded-2xl text-absolute-white absolute hover:cursor-grab "
+        className="flex justify-center items-center w-28 h-10 shadow-[0px_5px_0_black] bg-gradient-to-bl from-grey-10 via-grey-06 via-60% to-grey-06 border-[1px] backdrop-blur-sm  border-grey-12  
+        rounded-2xl  absolute hover:cursor-grab scale-75 md:scale-100 "
         style={{ left: `${boxPos.x}px`, top: `${boxPos.y}px` }}
         onMouseDown={onMouseDown}
         onTouchStart={onTouchDown}
@@ -101,7 +101,7 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
           draggable={false}
           className="select-none pointer-events-none overflow-hidden relative"
         >
-          <p draggable={false} className="text-xs ">
+          <p draggable={false} className="text-xs text-white font-Pixelify">
             {title}
           </p>
         </div>

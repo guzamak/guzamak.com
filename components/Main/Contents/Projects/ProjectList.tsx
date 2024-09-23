@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Filterbox from "./Filterbox";
 import Project from "./Project";
 
@@ -88,18 +88,23 @@ const projectData = [
 
 const filterType = ["Website", "Game", "Other"];
 export default function ProjectList() {
-  const [filter,setFilter] = useState();
+  const [filter,setFilter] = useState(filterType);
+  const [projects,setProjects] = useState(projectData);
+
+  useEffect(() => {
+
+  },[filter])
 
   return (
     <div className="container max-w-screen-2xl mx-auto px-4 flex flex-col items-center gap-y-14">
-      <h1 className="text-white text-4xl">- Project -</h1>
+      <h1 className="text-white text-4xl font-Pixelify">- Project -</h1>
       <div className="flex gap-4 w-10/12 justify-center md:justify-start lg:justify-start">
         {filterType.map((type, i) => (
-          <Filterbox title={type} key={i}/>
-        ))}
+          <Filterbox title={type} key={i} filter={filter} setFilter={setFilter}/>
+        ))} 
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-10/12 place-items-center gap-10 ">
-        {projectData.map((p, i) => (
+        {projects.map((p, i) => (
           <Project
             key={i}
             title={p.title}

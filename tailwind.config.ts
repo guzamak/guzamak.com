@@ -8,22 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        'Jacquarda_Bastarda': ['"Jacquarda Bastarda 9"', "sans-serif"],
+        'Pixelify' : ['"Pixelify Sans"', "sans-serif"],
+        'IBM_Plex' : ['"IBM Plex Sans"', "sans-serif"],
       },
       "colors": {
-        'absolute-white': '#ffffff',
-        'absolute-black': '#000000',
-        'white-shades-50': '#808080',
-        'white-shades-55': '#8c8c8c',
-        'white-shades-60': '#999999',
-        'white-shades-65': '#a6a6a6',
-        'white-shades-70': '#b3b3b3',
-        'white-shades-75': '#bfbfbf',
-        'white-shades-80': '#cccccc',
-        'white-shades-90': '#e6e6e6',
         'grey-06': '#0f0f0f',
         'grey-10': '#1a1a1a',
         'grey-12': '#1f1f1f',

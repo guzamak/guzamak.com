@@ -23,8 +23,8 @@ export default function Activity({ imagePath, title, desc }: ActivityProp) {
       </div>
 
       <div className="flex flex-col justify-center w-11/12 overflow-hidden py-2 gap-2 px-4">
-        <h1 className="text-gray-400 text-xl opacity-50">{title}</h1>
-        <p className=" truncate  text-grey-25 ">{desc}</p>
+        <h1 className="text-gray-400 text-xl opacity-50 font-IBM_Plex">{title}</h1>
+        <p className=" truncate  text-grey-25 font-IBM_Plex">{desc}</p>
       </div>
     </div>
   );

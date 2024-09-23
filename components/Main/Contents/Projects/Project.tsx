@@ -48,8 +48,8 @@ export default function Project({
         </div>
       </div>
       <div className="flex flex-col gap-4 w-full">
-        <h1 className="text-gray-400 text-xl opacity-50">{title}</h1>
-        <p className="text-grey-25 ">{desc}</p>
+        <h1 className="text-gray-400 text-xl opacity-50 font-IBM_Plex">{title}</h1>
+        <p className="text-grey-25 font-IBM_Plex">{desc}</p>
       </div>
       <div className="flex gap-4 absolute bottom-5 left-10 items-center">
         {Object.keys(url).map((key) => {

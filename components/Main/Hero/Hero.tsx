@@ -125,7 +125,6 @@ export default function Hero() {
       const adjustedInfoHeight = infoBox.height * scaleFactor;
       if (innerWidth < 768) {
         // < md screen size;
-
         const startInfoPos = { x: HeroBox.width / 2 - adjustedInfoHeight /2 , y: (HeroBox.height / 2 - adjustedInfoWidth ) };
         const yPos = Math.abs(HeroBox.top) + HeroBox.bottom - ((HeroBox.height - (startInfoPos.y + infoBox.height)) / 2);
         
@@ -200,11 +199,11 @@ export default function Hero() {
 
   useEffect(() => {
     getStartPosition();
-    dashline();
   }, [innerWidth,innerHeight]);
 
   useEffect(() => {
     getDistanceOfBox();
+    dashline();
   }, [passionPos, cretivePos, learningPos]);
 
   const createLineStyle = (start: Position, end: Position) => {
@@ -229,7 +228,7 @@ export default function Hero() {
 
   return (
     <div
-      className="w-screen h-[60vh] relative overflow-hidden bg-black bg-opacity-25 "
+      className="w-screen min-h-[300px] h-[60vh] max-h-[900px] relative overflow-hidden bg-black bg-opacity-25 "
       ref={HeroRef}
     >
       <div className="absolute inset-0 h-full w-full bg-[linear-gradient(to_right,#40404012_1px,transparent_1px),linear-gradient(to_bottom,#40404012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
