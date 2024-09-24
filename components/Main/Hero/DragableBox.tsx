@@ -47,9 +47,9 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
           const newX = boxPos.x + deltaX;
           const newY = boxPos.y + deltaY;
           if (
-            Herobox.bottom - 10 > newY + selfbox.height &&
-            newY > 0 &&
-            newX > 0 &&
+            Math.abs(Herobox.top) + Herobox.bottom - 10 > newY + selfbox.height &&
+            newY > 10 &&
+            newX > 10 &&
             Herobox.right - 10 > newX + selfbox.width
           ) {
             setBoxPos({ x: newX, y: newY });
@@ -75,9 +75,9 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
           const newX = boxPos.x + deltaX;
           const newY = boxPos.y + deltaY;
           if (
-            Herobox.bottom - 10 > newY + selfbox.height &&
-            newY > 0 &&
-            newX > 0 &&
+            Math.abs(Herobox.top) + Herobox.bottom - 10 > newY + selfbox.height &&
+            newY > 10 &&
+            newX > 10 &&
             Herobox.right - 10 > newX + selfbox.width
           ) {
             setBoxPos({ x: newX, y: newY });
