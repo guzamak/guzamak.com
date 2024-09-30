@@ -17,9 +17,10 @@ const Mainbox = forwardRef<HTMLDivElement,Props>(({boxPos= { x: 0, y: 0 } }:Prop
     ${getMinResposiveSize(innerWidth,innerHeight) == "md" && "scale-75" } 
     ${getMinResposiveSize(innerWidth,innerHeight) == "lg" && "scale-100" } 
    ` }
+   draggable={false}
   style={{ left: `${boxPos.x}px`, top: `${boxPos.y}px` }}
   ref={ref}>
-    <h1 className="text-4xl text-white opacity-75 font-Jacquarda_Bastarda">Me.</h1>
+    <h1 className="text-4xl text-white opacity-75 font-Jacquarda_Bastarda" >Me.</h1>
   </div>;
 });
 // Set displayName for the component

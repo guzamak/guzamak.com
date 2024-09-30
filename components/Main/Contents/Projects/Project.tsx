@@ -32,7 +32,6 @@ export default function Project({
   type,
   url,
 }: ProjectProp) {
-  useEffect(() => {}, []);
   return (
     <div className="flex flex-col items-center gap-10 hover:shadow-[0px_3px_0_black] duration-500 border-[1px]  border-grey-12  rounded-2xl w-full min-w-64 max-w-96 h-[450px] p-10 relative group">
       <div className="w-full h-[40%] border-grey-15 border-2  rounded-2xl overflow-hidden">

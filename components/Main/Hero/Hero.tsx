@@ -4,6 +4,7 @@ import Mainbox from "./Mainbox";
 import { getDistance, getAngle, getMinResposiveSize } from "@/lib/canvasUlit";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import Skeleton from "../Contents/Skeleton";
+import useScrollPosition from "@/hooks/useScrollPosition";
 interface Position {
   x: number;
   y: number;
@@ -46,7 +47,7 @@ export default function Hero() {
     const passionBox = passionBoxRef.current?.getBoundingClientRect();
     const cretiveBox = cretiveBoxRef.current?.getBoundingClientRect();
     const learningBox = learningBoxRef.current?.getBoundingClientRect();
-    // use for refer to start position of hero when scroll and getDistanceOfBox run (abosolute of diff of y of screen and y of hero)
+    // use for refer to start position of hero when scroll and getDistanceOfBox run (reverse (-hero.top) of diff of y of screen and y of hero to make scroll not effect to position)
     const HeroBox = HeroRef.current?.getBoundingClientRect();
 
     setBoxBounding({ infoBox, passionBox, cretiveBox, learningBox, HeroBox });
@@ -54,20 +55,18 @@ export default function Hero() {
   };
   const getDistanceOfBox = () => {
     const { infoBox, passionBox, cretiveBox, learningBox, HeroBox } = boxBounding;
-
     if (infoBox && passionBox && cretiveBox && learningBox && HeroBox) {
       let infoCenterPos;
       if (innerWidth < 768) {
         // < md
         infoCenterPos = {
           x: infoBox.left + (infoBox.right - infoBox.left) / 2,
-          y: Math.abs(HeroBox.top) + infoBox.bottom,
+          y: -(HeroBox.top) + infoBox.bottom,
         };
       } else {
         infoCenterPos = {
           x: infoBox.right,
-          y:
-            Math.abs(HeroBox.top) +
+          y: -(HeroBox.top) +
             infoBox.top +
             (infoBox.bottom - infoBox.top) / 2,
         };
@@ -75,21 +74,21 @@ export default function Hero() {
       const passionCenterPos = {
         x: passionBox.left,
         y:
-          Math.abs(HeroBox.top) +
+        -(HeroBox.top) +
           passionBox.top +
           (passionBox.bottom - passionBox.top) / 2,
       };
       const cretiveCenterPos = {
         x: cretiveBox.left,
         y:
-          Math.abs(HeroBox.top) +
+        -(HeroBox.top) +
           cretiveBox.top +
           (cretiveBox.bottom - cretiveBox.top) / 2,
       };
       const learningCenterPos = {
         x: learningBox.left,
         y:
-          Math.abs(HeroBox.top) +
+        -(HeroBox.top) +
           learningBox.top +
           (learningBox.bottom - learningBox.top) / 2,
       };
@@ -120,7 +119,8 @@ export default function Hero() {
           scaleFactor = 1.5;
           break
         case"md" :
-          scaleFactor = 1.75;
+        // why i dont know but picture show it align center
+          scaleFactor = 1.25;
           break
       }
       const adjustedInfoWidth = infoBox.width * scaleFactor;
@@ -128,7 +128,7 @@ export default function Hero() {
       if (innerWidth < 768) {
         // < md screen size;
         const startInfoPos = { x: HeroBox.width / 2 - adjustedInfoHeight /2 , y: (HeroBox.height / 2 - adjustedInfoWidth ) };
-        const yPos = Math.abs(HeroBox.top) + HeroBox.bottom - ((HeroBox.height - (startInfoPos.y + infoBox.height)) / 2);
+        const yPos = -(HeroBox.top) + HeroBox.bottom - ((HeroBox.height - (startInfoPos.y + infoBox.height)) / 2);
         
         // use flex-row justify space-around idea to calculate a position 
         const availableWidth = HeroBox.width - passionBox.width - cretiveBox.width - learningBox.width;
@@ -235,7 +235,7 @@ export default function Hero() {
 
   return (
     <div
-      className="w-screen min-h-[300px] h-[60vh] max-h-[900px] overflow-hidden bg-black bg-opacity-25 relative"
+      className="w-screen min-h-[300px] h-[60vh] max-h-[900px] overflow-hidden relative bg-black bg-opacity-25 "
       ref={HeroRef}
     >
       <div className={`${isReady ? "opacity-100" : "opacity-0" } w-full h-full relative duration-700`}>
