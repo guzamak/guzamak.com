@@ -4,7 +4,6 @@ import Mainbox from "./Mainbox";
 import { getDistance, getAngle, getMinResposiveSize } from "@/lib/canvasUlit";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import Skeleton from "../Contents/Skeleton";
-import useScrollPosition from "@/hooks/useScrollPosition";
 interface Position {
   x: number;
   y: number;
