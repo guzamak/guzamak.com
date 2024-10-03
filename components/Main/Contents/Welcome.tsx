@@ -68,10 +68,6 @@ export default function Welcome() {
     }
   
     return () => {
-      window.removeEventListener("wheel", wheel);
-      window.removeEventListener("touchstart", touchStart);
-      window.removeEventListener("touchend", touchEnd);
-      window.removeEventListener("touchmove", touchmove);
       document.body.style.height = 'auto';
       document.body.style.overflowY  = 'scroll';
       window.removeEventListener('scroll', pervertScroll);
