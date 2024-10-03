@@ -13,6 +13,7 @@ export default function Welcome() {
   const [triggerY, setTriggerY] = useState(0)
   const [isAnimation, setIsAnimation] = useState(false)
   const [isTouch, setIsTouch] = useState(false)
+
   useEffect(() => {
     const wheel = (e) => {
       const deltaY = e.deltaY;
@@ -71,7 +72,7 @@ export default function Welcome() {
     return () => {
       document.body.style.height = 'auto';
       document.body.style.overflowY  = 'scroll';
-      window.removeEventListener('scroll', prevertScroll);
+      window.removeEventListener('scroll', preventScroll);
     }
   },[istrigger,triggerY,isTouch])
 
