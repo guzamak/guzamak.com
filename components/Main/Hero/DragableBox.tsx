@@ -109,11 +109,12 @@ const DraggableBox = forwardRef<HTMLDivElement, Props>(
         onMouseDown={onMouseDown}
         onTouchStart={onTouchDown}
         draggable={false}
+        data-notscroll = {true}
       >
         <div className="bg-grey-06 rounded-full h-4 w-4  border-[1px] border-grey-12 absolute left-0 -translate-x-2"></div>
         <div
           draggable={false}
-          className="select-none pointer-events-none overflow-hidden relative"        >
+          className="select-none pointer-events-none overflow-hidden relative">
           <p draggable={false} className="text-xs text-white font-Pixelify">
             {title}
           </p>
