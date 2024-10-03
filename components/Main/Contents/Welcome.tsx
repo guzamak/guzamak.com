@@ -49,11 +49,12 @@ export default function Welcome() {
     }
 
     const touchEnd = (e) => {
+    
       setIsTouch(false)
       setStartPosition({x:0, y:0})
     }
 
-    const pervertScroll = (e) => {
+    const preventScroll = (e) => {
       window.scrollTo(0,0)
     } 
     window.addEventListener("wheel", wheel);
@@ -64,13 +65,13 @@ export default function Welcome() {
     if (!istrigger) {
       document.body.style.height = '100vh';
       document.body.style.overflow = 'hidden';
-      window.addEventListener('scroll', pervertScroll);
+      window.addEventListener('scroll', preventScroll);
     }
   
     return () => {
       document.body.style.height = 'auto';
       document.body.style.overflowY  = 'scroll';
-      window.removeEventListener('scroll', pervertScroll);
+      window.removeEventListener('scroll', prevertScroll);
     }
   },[istrigger,triggerY,isTouch])
 
