@@ -2,20 +2,21 @@ import { useRef, useEffect, useState } from "react"
 import useWindowDimensions from "@/hooks/useWindowDimensions"
 import { Hadou90 } from "./hadou90"
 import ScrollIcon from "./ScrollIcon"
+import { Position,WindowDimensions } from "@/lib/types"
 
 export default function Welcome() {
-  const triggerRef = useRef(null)
-  const canvasRef = useRef(null)
-  const welcomeRef = useRef(null)
-  const [istrigger, setIstrigger] = useState(false)
-  const [startPosition, setStartPosition] = useState({ x: 0, y: 0,})
-  const {innerHeight,innerWidth} = useWindowDimensions()
-  const [triggerY, setTriggerY] = useState(0)
-  const [isAnimation, setIsAnimation] = useState(false)
-  const [isTouch, setIsTouch] = useState(false)
+  const triggerRef = useRef<HTMLDivElement>(null)
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const welcomeRef = useRef<HTMLDivElement>(null)
+  const [istrigger, setIstrigger] = useState<boolean>(false)
+  const [startPosition, setStartPosition] = useState<Position>({ x: 0, y: 0,})
+  const {innerHeight,innerWidth}:WindowDimensions = useWindowDimensions()
+  const [triggerY, setTriggerY] = useState<number>(0)
+  const [isAnimation, setIsAnimation] = useState<boolean>(false)
+  const [isTouch, setIsTouch] = useState<boolean>(false)
 
   useEffect(() => {
-    const wheel = (e) => {
+    const wheel = (e:WheelEvent) => {
       const deltaY = e.deltaY;
       const newTriggerY =  Math.min(triggerY-(deltaY * 0.7),0)
       if (innerHeight+triggerY < 0){
@@ -27,9 +28,8 @@ export default function Welcome() {
         setTriggerY(newTriggerY) // ^ this way
       }
     }
-    const touchmove = (e) => {
-      // console.log(e)
-      if (e.target.dataset.notscroll || !isTouch) return; 
+    const touchmove = (e:TouchEvent) => {
+      if ((e.target as HTMLElement).dataset.notscroll || !isTouch) return; 
       const touch = e.touches[0];
       const deltaY = startPosition.y - touch.pageX;
       const newTriggerY =  Math.min(triggerY-(deltaY* 0.3),0)
@@ -43,19 +43,19 @@ export default function Welcome() {
       }
     }
 
-    const touchStart = (e) => {
+    const touchStart = (e:TouchEvent) => {
       const touch = e.touches[0];
       setIsTouch(true)
       setStartPosition({x:touch.pageX, y:touch.pageY})
     }
 
-    const touchEnd = (e) => {
+    const touchEnd = (e:TouchEvent) => {
     
       setIsTouch(false)
       setStartPosition({x:0, y:0})
     }
 
-    const preventScroll = (e) => {
+    const preventScroll = (e:Event) => {
       window.scrollTo(0,0)
     } 
     window.addEventListener("wheel", wheel);
@@ -72,9 +72,13 @@ export default function Welcome() {
     return () => {
       document.body.style.height = 'auto';
       document.body.style.overflowY  = 'scroll';
+      window.removeEventListener("wheel", wheel);
+      window.removeEventListener("touchstart", touchStart);
+      window.removeEventListener("touchend", touchEnd);
+      window.removeEventListener("touchmove", touchmove);
       window.removeEventListener('scroll', preventScroll);
     }
-  },[istrigger,triggerY,isTouch])
+  },[istrigger, triggerY, isTouch, innerHeight, startPosition.y])
 
   useEffect(()=>{
     if (triggerY < -(innerHeight / 1000)){
@@ -91,7 +95,7 @@ export default function Welcome() {
     canvas.height = innerHeight
     const ctx = canvas.getContext("2d");
 
-    const hadou90s = []
+    const hadou90s:Array<Hadou90> = []
 
     for (let i = 0;i < Math.round(innerWidth/5) ;i++){
       const x = Math.random() * innerWidth;
@@ -103,8 +107,9 @@ export default function Welcome() {
       hadou90s.push(newHadou90);
     }
 
-    let animationFrameId;
+    let animationFrameId :number ;
     const animation = () => {
+      if (!ctx) return;
       animationFrameId = window.requestAnimationFrame(animation);
       ctx.clearRect(0, 0, canvas.width, canvas.height);  
       for (var i = 0; i < hadou90s.length; i++){

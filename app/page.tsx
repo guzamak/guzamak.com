@@ -1,11 +1,10 @@
 "use client"
-import Introduction from "@/components/Main/Contents/Introduction";
-import Hero from "@/components/Main/Hero/Hero";
-import ProjectList from "@/components/Main/Contents/Projects/ProjectList";
-import ActivityList from "@/components/Main/Contents/activitys/ActivityList";
-import Skill from "@/components/Main/Contents/Skill";
-import Welcome from "@/components/Main/Contents/Welcome";
-import { useEffect } from "react";
+import Introduction from "@/components/ui/Introduction";
+import Hero from "@/components/hero/Hero";
+import ProjectList from "@/components/projects/ProjectList";
+import ActivityList from "@/components/activitys/ActivityList";
+import Skill from "@/components/ui/Skill";
+import Welcome from "@/components/scroll/Welcome";
 export default function Home() {
   return (
     <main className="bg-grey-06 flex flex-col gap-24 overflow-hidden">
