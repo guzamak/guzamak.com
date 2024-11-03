@@ -68,7 +68,7 @@ export default function Welcome() {
       document.body.style.overflow = 'hidden';
       window.addEventListener('scroll', preventScroll);
     }
-  
+    
     return () => {
       document.body.style.height = 'auto';
       document.body.style.overflowY  = 'scroll';
@@ -123,6 +123,11 @@ export default function Welcome() {
     }
     
   },[innerHeight,innerWidth])
+
+  // bug fix when refesh and scroll not 0 it will make scroll can use becase trigger need if (window.scrollY == 0 ) to set new state and make it change position
+  useEffect(() => {
+    window.scrollTo(0,0)
+  })
 
   return (
     <div className="w-screen  h-screen fixed bg-grey-06 z-10 duration-500 flex flex-col justify-center items-center transition-opacity" style={{opacity : istrigger ? 0 : 1,pointerEvents:istrigger ? "none" : "auto"}}
