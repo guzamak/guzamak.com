@@ -81,7 +81,7 @@ export default function Welcome() {
   },[istrigger, triggerY, isTouch, innerHeight, startPosition.y])
 
   useEffect(()=>{
-    if (triggerY < -(innerHeight / 1000)){
+    if (triggerY < -(innerHeight / 3)){
       setIsAnimation(true)
     }else{
       setIsAnimation(false)

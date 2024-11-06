@@ -27,7 +27,7 @@ export default function Hero() {
   const [cretivePos, setCretivePos] = useState<Position>({ x: 0, y: 0 });
   const [learningPos, setLearningPos] = useState<Position>({ x: 0, y: 0 });
   const [infoPos, setInfoPos] = useState<Position>({ x: 0, y: 0 });
-  const [numsbox, setNumsBox] = useState<number>();
+  const [boxLength, setBoxLength] = useState<number>();
   const {innerWidth,innerHeight} = useWindowDimensions();
   const [boxBounding, setBoxBounding] = useState<BoxBounding>()
   const [isReady, setIsReady] = useState(false);
@@ -220,10 +220,10 @@ export default function Hero() {
   };
 
   const dashline = () => {
-    const containerWidth = (150 * window.innerWidth) / 100;
-    const gap = 100;
-    const numBoxes = Math.floor(containerWidth / (boxWidth.current + gap));
-    setNumsBox(numBoxes);
+    const containerWidth = innerWidth;
+    const gap = boxWidth.current;
+    const len = Math.round(containerWidth / (boxWidth.current + gap));
+    setBoxLength(len);
   };
 
   return (
@@ -239,10 +239,10 @@ export default function Hero() {
             className="absolute h-[0.4rem] overflow-hidden"
             style={createLineStyle(infoBoxCenterPos, pos)}
           >
-            <div className="flex w-[150vw] h-full">
+            <div className="flex w-screen h-full">
               {[...Array(2)].map((_, j) => (
                 <div className="flex animate-loop-scroll " key={j}>
-                  {[...Array(numsbox)].map((_, k) => (
+                  {[...Array(boxLength)].map((_, k) => (
                     <div
                       className="h-full border-grey-25 border-[1px] rounded opacity-50 "
                       style={{

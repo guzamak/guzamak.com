@@ -29,7 +29,8 @@ export default function Skill() {
       if (textRef.current) {
         const boundingBox = textRef.current?.getBoundingClientRect();
         const textWidth = boundingBox.width;
-        const len = Math.ceil(window.innerWidth / (textWidth + textWidth + 50));
+        const gap = textWidth + 50;
+        const len = Math.round(window.innerWidth / (textWidth + gap));
         setSvgLength(len);
       }
     };
