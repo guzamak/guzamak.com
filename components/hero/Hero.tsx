@@ -52,7 +52,7 @@ export default function Hero() {
       if (innerWidth < 768) {
         // < md
         infoCenterPos = {
-          x: infoBox.left + (infoBox.right - infoBox.left) / 2,
+          x: infoBox.left +  infoBox.width/ 2,
           y: -(HeroBox.top) + infoBox.bottom,
         };
       } else {
@@ -60,7 +60,7 @@ export default function Hero() {
           x: infoBox.right,
           y: -(HeroBox.top) +
             infoBox.top +
-            (infoBox.bottom - infoBox.top) / 2,
+            infoBox.height/ 2,
         };
       }
       const passionCenterPos = {
@@ -68,21 +68,21 @@ export default function Hero() {
         y:
         -(HeroBox.top) +
           passionBox.top +
-          (passionBox.bottom - passionBox.top) / 2,
+          passionBox.height / 2,
       };
       const cretiveCenterPos = {
         x: cretiveBox.left,
         y:
         -(HeroBox.top) +
           cretiveBox.top +
-          (cretiveBox.bottom - cretiveBox.top) / 2,
+          cretiveBox.height/ 2,
       };
       const learningCenterPos = {
         x: learningBox.left,
         y:
         -(HeroBox.top) +
           learningBox.top +
-          (learningBox.bottom - learningBox.top) / 2,
+          learningBox.height / 2,
       };
       setInfoCenterPos(infoCenterPos);
       setPassionBoxCenterPos(passionCenterPos);
@@ -106,21 +106,10 @@ export default function Hero() {
   const getStartPosition =useCallback(() => {
     const { infoBox, passionBox, cretiveBox, learningBox, HeroBox } = getBoxBoundingClientRect();
     if (infoBox && passionBox && cretiveBox && learningBox && HeroBox && innerWidth && innerHeight ) {
-      let scaleFactor = 1;
-      switch ( getMinResposiveSize(innerWidth,innerHeight)  ) {
-        case"sm" :
-          scaleFactor = 1.5;
-          break
-        case"md" :
-        // why i dont know but picture show it align center
-          scaleFactor = 1.25;
-          break
-      }
-      const adjustedInfoWidth = infoBox.width * scaleFactor;
-      const adjustedInfoHeight = infoBox.height * scaleFactor;
       if (innerWidth < 768) {
+        console.log(HeroBox.width,infoBox.width);
         // < md screen size;
-        const startInfoPos = { x: HeroBox.width / 2 - adjustedInfoHeight /2 , y: (HeroBox.height / 2 - adjustedInfoWidth ) };
+        const startInfoPos = { x: HeroBox.width/2  - infoBox.width/2  , y: (HeroBox.height / 2 - infoBox.height ) };
         const yPos = -(HeroBox.top) + HeroBox.bottom - ((HeroBox.height - (startInfoPos.y + infoBox.height)) / 2);
         
         // use flex-row justify space-around idea to calculate a position 
@@ -140,8 +129,8 @@ export default function Hero() {
       } else if (innerWidth < 1024) { 
         //  < lg
 
-        const startinfoPos = { x: HeroBox.width / 4 - adjustedInfoWidth / 2 , y: HeroBox.height /2  - adjustedInfoHeight/2 }
-        const xPos = HeroBox.right - ((HeroBox.width - (startinfoPos.x+adjustedInfoWidth))/3 )
+        const startinfoPos = { x: HeroBox.width / 4 - infoBox.width / 2 , y: HeroBox.height /2  - infoBox.height/2 }
+        const xPos = HeroBox.right - ((HeroBox.width - (startinfoPos.x + infoBox.width))/3 )
 
         const availableHeight = HeroBox.height - passionBox.height - cretiveBox.height - learningBox.height;
         const spacing = availableHeight / 4;
@@ -155,26 +144,10 @@ export default function Hero() {
           startCretivePos,
           startLearningPos,
         );
-      } else if (innerWidth < 1536) {
-        //  < xl
-        const startinfoPos = { x: HeroBox.width / 4.5 - adjustedInfoWidth / 2 , y: HeroBox.height /2  - adjustedInfoHeight/2 }
-        const xPos = HeroBox.right - ((HeroBox.width - startinfoPos.x- adjustedInfoWidth)/4 )
-
-        const availableHeight = HeroBox.height - passionBox.height - cretiveBox.height - learningBox.height;
-        const spacing = availableHeight / 4;
-    
-        const startPassionPos = { x: xPos, y: spacing };
-        const startCretivePos = { x: xPos , y: spacing * 2 + passionBox.height };
-        const startLearningPos = { x: xPos, y: spacing * 3  + passionBox.height + cretiveBox.height };
-        setPositon(
-          startinfoPos,
-          startPassionPos,
-          startCretivePos,
-          startLearningPos,
-        );
-      } else{
-        const startinfoPos = { x: ((HeroBox.width-1536)/2) +(1536 / 5) - adjustedInfoWidth / 2 , y: (HeroBox.height /2  - adjustedInfoHeight/2) }
-        const xPos = (HeroBox.right - (HeroBox.width-1536)/2) - Math.min((HeroBox.width - startinfoPos.x - adjustedInfoWidth) / 5 ,HeroBox.width -(HeroBox.width-1536) /2 - cretiveBox.width)
+      }
+      else{
+        const startinfoPos = { x: ((HeroBox.width-1536)/2) +(1536 / 5) - infoBox.width / 2 , y: (HeroBox.height /2  - infoBox.height/2) }
+        const xPos = (HeroBox.right - (HeroBox.width-1536)/2) - Math.min((HeroBox.width - startinfoPos.x - infoBox.width) / 5 ,HeroBox.width -(HeroBox.width-1536) /2 - cretiveBox.width)
 
         const availableHeight = HeroBox.height - passionBox.height - cretiveBox.height - learningBox.height;
         const spacing = availableHeight / 4;
@@ -258,7 +231,6 @@ export default function Hero() {
           </div>
         )
       )}
-      <div className="relative w-full h-full">
         <Mainbox ref={personalInfoBoxRef} boxPos={infoPos} />
         <DragableBox
           title="CRETIVE"
@@ -284,7 +256,6 @@ export default function Hero() {
           Herobox={boxBounding?.HeroBox}
           selfbox={boxBounding?.learningBox}
         />
-      </div>
       </div>
       <div
         className={`${
