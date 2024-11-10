@@ -31,7 +31,7 @@ export default function Welcome() {
     const touchmove = (e:TouchEvent) => {
       if ((e.target as HTMLElement).dataset.notscroll || !isTouch) return; 
       const touch = e.touches[0];
-      const deltaY = startPosition.y - touch.pageX;
+      const deltaY = startPosition.y - touch.pageY;
       const newTriggerY =  Math.min(triggerY-(deltaY* 0.3),0)
       if (innerHeight+triggerY < 0){
         setIstrigger(true)
