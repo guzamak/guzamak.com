@@ -123,7 +123,6 @@ export default function Hero() {
       innerHeight
     ) {
       if (innerWidth < 768) {
-        console.log(HeroBox.width, infoBox.width);
         // < md screen size;
         const startInfoPos = {
           x: HeroBox.width / 2 - infoBox.width / 2,
