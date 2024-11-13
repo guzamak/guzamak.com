@@ -56,13 +56,12 @@ export default function Hero() {
     const passionBox = passionBoxRef.current?.getBoundingClientRect();
     const cretiveBox = cretiveBoxRef.current?.getBoundingClientRect();
     const learningBox = learningBoxRef.current?.getBoundingClientRect();
-    // use for refer to start position of hero when scroll and getDistanceOfBox run (reverse (-hero.top) of diff of y of screen and y of hero to make scroll not effect to position)
     const HeroBox = HeroRef.current?.getBoundingClientRect();
 
     setBoxBounding({ infoBox, passionBox, cretiveBox, learningBox, HeroBox });
     return { infoBox, passionBox, cretiveBox, learningBox, HeroBox };
   };
-  const getDistanceOfBox = useCallback(() => {
+  const getCenterPos = useCallback(() => {
     if (!boxBounding) return;
     const { infoBox, passionBox, cretiveBox, learningBox, HeroBox } =
       boxBounding;
@@ -72,32 +71,32 @@ export default function Hero() {
         // < md
         infoCenterPos = {
           x: infoBox.left + infoBox.width / 2,
-          y: -HeroBox.top + infoBox.bottom,
+          y: infoPos.y + infoBox.height,
         };
       } else {
         infoCenterPos = {
           x: infoBox.right,
-          y: -HeroBox.top + infoBox.top + infoBox.height / 2,
+          y: infoPos.y + infoBox.height / 2,
         };
       }
       const passionCenterPos = {
         x: passionBox.left,
-        y: -HeroBox.top + passionBox.top + passionBox.height / 2,
+        y: passionPos.y + passionBox.height / 2,
       };
       const cretiveCenterPos = {
         x: cretiveBox.left,
-        y: -HeroBox.top + cretiveBox.top + cretiveBox.height / 2,
+        y: cretivePos.y + cretiveBox.height / 2,
       };
       const learningCenterPos = {
         x: learningBox.left,
-        y: -HeroBox.top + learningBox.top + learningBox.height / 2,
+        y: learningPos.y + learningBox.height / 2,
       };
       setInfoCenterPos(infoCenterPos);
       setPassionBoxCenterPos(passionCenterPos);
       setCretiveBoxCenterPos(cretiveCenterPos);
       setLearningBoxCenterPos(learningCenterPos);
     }
-  }, [boxBounding, innerWidth]);
+  }, [boxBounding, innerWidth,infoPos,cretivePos,passionPos,learningPos]);
 
   const setPositon = (
     startInfoPos: Position,
@@ -131,8 +130,7 @@ export default function Hero() {
           y: HeroBox.height / 2 - infoBox.height,
         };
         const yPos =
-          -HeroBox.top +
-          HeroBox.bottom -
+          HeroBox.height -
           (HeroBox.height - (startInfoPos.y + infoBox.height)) / 2;
 
         // use flex-row justify space-around idea to calculate a position
@@ -192,8 +190,7 @@ export default function Hero() {
           x: HeroBox.width / 4.5 - infoBox.width / 2,
           y: HeroBox.height / 2 - infoBox.height / 2,
         };
-        const xPos =
-          HeroBox.right - (HeroBox.width - startinfoPos.x - infoBox.width) / 4;
+        const xPos = HeroBox.right - (HeroBox.width - startinfoPos.x - infoBox.width) / 4;
         const availableHeight =
           HeroBox.height -
           passionBox.height -
@@ -258,10 +255,12 @@ export default function Hero() {
   }, [passionPos, cretivePos, learningPos]);
 
   useEffect(() => {
-    getDistanceOfBox();
+    getCenterPos();
     dashline();
     setIsReady(true);
-  }, [boxBounding, getDistanceOfBox]);
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [boxBounding, getCenterPos]);
 
   const createLineStyle = (start: Position, end: Position) => {
     const distance = getDistance(start.x, start.y, end.x, end.y);

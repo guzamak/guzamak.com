@@ -37,7 +37,7 @@ const DragableBox = forwardRef<HTMLDivElement, Props>(
           const newX = boxPos.x + deltaX;
           const newY = boxPos.y + deltaY;
           if (
-            -Herobox.top + Herobox.bottom - 10 > newY + selfbox.height &&
+            Herobox.height - 10 > newY + selfbox.height &&
             newY > 10 &&
             newX > 10 &&
             Herobox.right - 10 > newX + selfbox.width
@@ -65,7 +65,7 @@ const DragableBox = forwardRef<HTMLDivElement, Props>(
           const newX = boxPos.x + deltaX;
           const newY = boxPos.y + deltaY;
           if (
-            -Herobox.top + Herobox.bottom - 10 > newY + selfbox.height &&
+            Herobox.height - 10 > newY + selfbox.height &&
             newY > 10 &&
             newX > 10 &&
             Herobox.right - 10 > newX + selfbox.width
